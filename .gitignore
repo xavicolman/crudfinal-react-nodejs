@@ -1,0 +1,5 @@
+# mpdejs
+node_modules
+
+#archivo de configuracion
+.env
