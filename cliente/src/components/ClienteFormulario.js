@@ -1,4 +1,4 @@
-import { Grid, Typography, Card, CardContent, TextField, Button } from "@mui/material"
+import { Grid, Typography, TextField, Button, Container, Box } from "@mui/material"
 import Link from '@mui/material/Link';
 
 
@@ -24,88 +24,111 @@ export default function ClienteFormulario() {
   }
 
   return (
-    <Grid container direction="column" alignItems="center" justifyContent="center">
-      <Grid item sx={12} style={{ width: "550px" }}>
-        <Card sx={{ mt: 5 }} style={{ backgroundColor: "#1e272e", padding: "1rem" }}>
-          <Typography variant="S" textAlign="center" color="white">CREAR NUEVO CLIENTE</Typography>
-          <CardContent>
-            <form onSubmit={maneja_evento_submit}>
+    <Container>
 
+      <Box
+        sx={{
+          width: 650,
+          height: 560,
+          backgroundColor: "#1e272e",
+          marginTop: 5,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center"
+        }}
+      >
+        <Typography component="h1" variant="h5" sx={{ mt: 2 }}  style={{ fontWeight: "bold" }}>
+          Nuevo registro
+        </Typography>
+
+        <Box component="form" sx={{ mt: 3, width: 500, height: 250 }}>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
               <TextField
-                variant="filled"
+                required
+                fullWidth
+                id="Nombre"
                 label="Nombre"
-                sx={{ display: "block", margin: ".5rem 0" }}
+                name="Nombre"
                 inputProps={{ style: { color: "white" } }}
                 InputLabelProps={{ style: { color: "white" } }}
-                fullWidth
               />
+            </Grid>
 
-              <Grid container spacing={2}>
-                <Grid item sx={12} sm={6}>
-                  <TextField
-                    variant="filled"
-                    label="Cedula"
-                    sx={{ display: "block", margin: ".5rem 0" }}
-                    inputProps={{ style: { color: "white" } }}
-                    InputLabelProps={{ style: { color: "white" } }}
-                    fullWidth
-                  />
-                </Grid>
-                <Grid item sx={12} sm={6}>
-                  <TextField
-                    variant="filled"
-                    label="Telefono"
-                    sx={{ display: "block", margin: ".5rem 0" }}
-                    inputProps={{ style: { color: "white" } }}
-                    InputLabelProps={{ style: { color: "white" } }}
-                    fullWidth
-                  />
-                </Grid>
-              </Grid>
-
-              <Grid container spacing={2}>
-                <Grid item sx={12} sm={6}>
-                  <TextField
-                    variant="filled"
-                    label="Fecha de nacimiento"
-                    sx={{ display: "block", margin: ".7rem 0" }}
-                    inputProps={{ style: { color: "white" } }}
-                    InputLabelProps={{ style: { color: "white" } }}
-                    fullWidth
-                    type="date"
-                  />
-                </Grid>
-              </Grid>
-
+            <Grid item xs={12} sm={6}>
               <TextField
-                variant="filled"
-                label="Dirección "
-                sx={{ display: "block", margin: ".5rem 0" }}
+                name="Cualquier"
+                required
+                fullWidth
+                id="firstName"
+                label="Cédula"
+                autoFocus
                 inputProps={{ style: { color: "white" } }}
                 InputLabelProps={{ style: { color: "white" } }}
-                fullWidth
               />
-
+            </Grid>
+            <Grid item xs={12} sm={6}>
               <TextField
-                variant="filled"
-                label="Observacion"
+                required
+                fullWidth
+                id="lastName"
+                label="Telefono"
+                name="Telefono"
+                inputProps={{ style: { color: "white" } }}
+                InputLabelProps={{ style: { color: "white" } }}
+              />
+            </Grid>
+
+            <Grid item xs={12} sm={6}>
+              <TextField
+                name="Cualquier"
+                required
+                fullWidth
+                id="firstName"
+                label="Feha de nacimiento"
+                autoFocus
+                type="date"
+                inputProps={{ style: { color: "white" } }}
+                InputLabelProps={{ style: { color: "white" } }}
+              />
+            </Grid>
+
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                id="Nombre"
+                label="Dirección"
+                name="Nombre"
+                inputProps={{ style: { color: "white" } }}
+                InputLabelProps={{ style: { color: "white" } }}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                id="Nombre"
+                label="Observaciones"
+                name="Nombre"
                 multiline
                 rows={4}
-                sx={{ display: "block", margin: ".5rem 0" }}
                 inputProps={{ style: { color: "white" } }}
                 InputLabelProps={{ style: { color: "white" } }}
-                fullWidth
               />
-
-              <Button variant="contained" color="primary" type="submit">
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3 }}
+              >
                 Guardar
               </Button>
-
-            </form>
-          </CardContent>
-        </Card>
-      </Grid>
-      <Copyright sx={{ mt: 5 }} />
-    </Grid>
+            </Grid>
+            <Copyright sx={{ mt: 5 }} />
+          </Grid>
+        </Box>
+      </Box>
+    </Container>
   );
 }
