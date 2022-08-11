@@ -1,80 +1,130 @@
 //el comando rfc es para crear componentes facilmente
 import { useEffect, useState } from "react"
+import { GridActionsCellItem } from "@mui/x-data-grid-pro";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/DeleteOutlined";
+//import { DeleteIcon, EditIcon } from "@mui/icons-material/";
 
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
+import Box from '@mui/material/Box';
+import { DataGrid } from '@mui/x-data-grid';
+
+
+
+const handleEditClick = async (id) => () => {
+  console.log("Editar", id);
+
+
+};
+
+const handleDeleteClick = async (id) =>  {
+  //console.log("Eliminar");
+  const res = await fetch(`http://localhost:1000/clientes/${id}`,{
+    method: "DELETE",
+  });
+  console.log(res)
+}
+
+const columns = [
+  { field: 'id', headerName: 'ID', width: 60 },
+  {
+    field: 'nombre',
+    headerName: 'Nombre',
+    width: 200,
+    editable: true,
+  },
+  {
+    field: 'ci',
+    headerName: 'Cedula',
+    width: 100,
+    editable: true,
+  },
+  {
+    field: 'd_fecha_nacimiento',
+    headerName: 'Fecha nac.',
+    width: 140,
+    editable: true,
+  },
+  {
+    field: 'direccion',
+    headerName: 'Direccion',
+    width: 150,
+    editable: true,
+  },
+  {
+    field: 'telefono',
+    headerName: 'Telefono',
+    width: 150,
+    editable: true,
+  },
+  {
+    field: 'obs',
+    headerName: 'Observacion',
+    width: 200,
+    editable: true,
+  },
+  {
+    field: "actions",
+    type: "actions",
+    headerName: "Acciones",
+    width: 100,
+    cellClassName: "actions",
+    getActions: ({ id }) => {
+
+      return [
+        <GridActionsCellItem
+          icon={<EditIcon />}
+          label="Edit"
+          className="textPrimary"
+          //onClick={handleEditClick(id)}
+          color="inherit"
+        />,
+        <GridActionsCellItem
+          icon={<DeleteIcon />}
+          label="Delete"
+          onClick={handleDeleteClick(id)}
+          color="inherit"
+          
+        />
+        
+      ];
+    }
+  }
+];
+
+
 
 export default function ClienteLista() {
 
   const [clientes, setClientes] = useState([]);
 
-    const busca_clientes = async () => {
-      const result = await fetch('http://localhost:1000/clientes');
-      const datos = await result.json();
-      //console.log(datos);
-      setClientes(datos);
-    }
+  const busca_clientes = async () => {
+    const result = await fetch('http://localhost:1000/clientes');
+    const datos = await result.json();
+    //console.log(datos);
+    setClientes(datos);
+  }
 
-    useEffect(() => {
-      busca_clientes();
-    }, []);
+  useEffect(() => {
+    busca_clientes();
+  }, []);
 
-    const datos = [
-      { id: 1, lastName: 'Francisco colman', cedula: '5255054', fecha_nacimiento: '08/04/1997', direccion: 'Tavapy' , telefono: '0973635373', observacion: "Hola mundo dede una observacion" },
-      { id: 2, lastName: 'Francisco colman', cedula: '5255054', fecha_nacimiento: '08/04/1997', direccion: 'Tavapy' , telefono: '0973635373', observacion: "Hola mundo dede una observacion" },
-      { id: 3, lastName: 'Francisco colman', cedula: '5255054', fecha_nacimiento: '08/04/1997', direccion: 'Tavapy' , telefono: '0973635373', observacion: "Hola mundo dede una observacion" },
 
-    ];
-    
-    return (
-      <>  
+  return (
+    <>
       <h1>Clientes</h1>
 
-      <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 600 }} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Nombre</TableCell>
-            <TableCell align="right">Cedula</TableCell>
-            <TableCell align="right">Fecha nacimiento</TableCell>
-            <TableCell align="right">Direccion</TableCell>
-            <TableCell align="right">Telefono</TableCell>
-            <TableCell align="right">Observacion</TableCell>
-          </TableRow>
-        </TableHead>
+      <Box sx={{ height: 400, width: '100%', backgroundColor: "#a5a5a5" }}>
+        <DataGrid
+          rows={clientes}
+          columns={columns}
+          pageSize={5}
+          rowsPerPageOptions={[5]}
+          disableSelectionOnClick
+          getRowId={(row) => row.id}
+        />
+      </Box>
 
-
-        <TableBody>
-          {datos.map((datos) => (
-            <TableRow
-              key={datos.id}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
-              <TableCell component="th" scope="row">
-                {datos.lastName}
-              </TableCell>
-              <TableCell align="right">{datos.cedula}</TableCell>
-              <TableCell align="right">{datos.fecha_nacimiento}</TableCell>
-              <TableCell align="right">{datos.direccion}</TableCell>
-              <TableCell align="right">{datos.telefono}</TableCell>
-              <TableCell align="right">{datos.observacion}</TableCell>
-
-            </TableRow>
-          ))}
-        </TableBody>
-
-        </Table>
-
-        </TableContainer>
-
-
-
-      </>
+    </>
 
   )
 }

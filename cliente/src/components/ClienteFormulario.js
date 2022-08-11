@@ -62,7 +62,7 @@ export default function ClienteFormulario() {
         sx={{
           width: 650,
           height: 560,
-          backgroundColor: "#1e272e",
+          backgroundColor: "#a5a5a5",
           marginTop: 5,
           display: "flex",
           flexDirection: "column",
